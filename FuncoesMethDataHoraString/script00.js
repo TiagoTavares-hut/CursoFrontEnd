@@ -8,6 +8,7 @@ console.log(Math.pow(4, 3)); //4³ = 64
 console.log(Math.pow(27,1/3)); // ³√27 = 3
 
 // funcaes de arredondamento (ceil, floor, round)
+//O Floor arredonda para baixo e o ceil arredonda para cima
 console.log(Math.round(4.7)); // 5
 console.log(Math.round(4.4)); // 4
 console.log(Math.ceil(4.1)); // 5
