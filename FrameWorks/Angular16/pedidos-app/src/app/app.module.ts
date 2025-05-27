@@ -3,11 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ClienteFormComponent } from './componentes/cliente-form/cliente-form.component';
+
 import { ProdutoFormComponent } from './componentes/produto-form/produto-form.component';
 import { PedidoFormComponent } from './componentes/pedido-form/pedido-form.component';
 import { PedidoListComponent } from './componentes/pedido-list/pedido-list.component';
-import { DadosComponent } from './services/dados/dados.component';
+import { FormsModule } from '@angular/forms';
+import { ClienteFormComponent } from './componentes/cliente-form/cliente-form.component';
+
+
 
 @NgModule({
   declarations: [
@@ -15,12 +18,12 @@ import { DadosComponent } from './services/dados/dados.component';
     ClienteFormComponent,
     ProdutoFormComponent,
     PedidoFormComponent,
-    PedidoListComponent,
-    DadosComponent
+    PedidoListComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

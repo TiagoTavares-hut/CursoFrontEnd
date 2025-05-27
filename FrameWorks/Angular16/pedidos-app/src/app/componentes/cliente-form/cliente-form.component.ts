@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Cliente } from 'src/app/models/clintes.models';
+import { DadosService } from 'src/app/services/dados.service';
 
 @Component({
   selector: 'app-cliente-form',
@@ -16,8 +17,9 @@ export class ClienteFormComponent {
       this.dadosService.getClientes().length+1, //id -> quantidade de clientes na lista +1
       this.nome //nome
     );
-    this.dadosService.adicionarClientes(cliente);
+    this.dadosService.adicionarCliente(cliente)
     this.nome="";
+    alert("Cliente Adicionado com Sucesso!!!");
   }
 
 }
