@@ -27,6 +27,14 @@
       "foto": "foto1.jpg",
       "descricao": "Trabalhar com Cloud",
       "salario": 8000
+    },
+    {
+      "id": "56e8",
+      "_id": 0,
+      "_nome": "",
+      "_foto": "",
+      "_descricao": "",
+      "_salario": 0
     }
   ],
   "curriculos": []

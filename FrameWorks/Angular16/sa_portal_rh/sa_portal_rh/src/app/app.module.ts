@@ -9,6 +9,11 @@ import { CurriculosComponent } from './views/curriculos/curriculos.component';
 import { VagasComponent } from './views/vagas/vagas.component';
 import { HomeComponent } from './views/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PainelVagasComponent } from './views/painel-vagas/painel-vagas.component';
+import { FormsModule } from '@angular/forms';
+import { CurriculoFormComponent } from './views/curriculo-form/curriculo-form.component';
+import { CurriculoListComponent } from './views/curriculo-list/curriculo-list.component';
+import { CurriculoDetailComponent } from './views/curriculo-detail/curriculo-detail.component';
 
 
 @NgModule({
@@ -18,12 +23,14 @@ import { HttpClientModule } from '@angular/common/http';
     FooterderComponent,
     CurriculosComponent,
     VagasComponent,
-    HomeComponent
+    HomeComponent,
+    PainelVagasComponent,
+    CurriculoFormComponent,
+    CurriculoListComponent,
+    CurriculoDetailComponent,
   ],
-  imports: [
-    BrowserModule,AppRoutingModule,HttpClientModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
