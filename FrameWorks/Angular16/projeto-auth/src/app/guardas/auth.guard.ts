@@ -5,8 +5,11 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-
+// implementa a interface (class abstrata)
 export class AuthGuard implements CanActivate  {
+  // O AuthGuard é um serviço que implementa a interface CanActivate
+  // O AuthGuard é usado para proteger rotas, garantindo que apenas usuários autenticados possam acessar determinadas páginas
+  // Ele verifica se o usuário está autenticado antes de permitir o acesso à
 
   constructor (private authService: AuthService, private router: Router){}
   // canActivate é chamado antes de ativar uma rota
