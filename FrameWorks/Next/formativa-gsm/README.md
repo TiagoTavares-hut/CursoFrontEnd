@@ -74,3 +74,58 @@ classDiagram
     Equipamento "1" -- "1+" OrdemServico : "associado a"
 
 ```
+ #### Explicação do Diagrama de Classe
+ - Um Usuário (Técnico) por ser responsável por várias Ordens de Servico
+ - Um Equipamento por estar associado a várias Ordens de Serviço
+
+ 2. ### Diagrama de Caso de Uso
+ Ilustrar as interações dos diferentes tipos de usuários (atores) com as funcionalidades do sistema
+
+ #### Explicação:
+ - Atores: Técnico, Gestor, Admin
+ 
+ - Casos de Usos:
+     - Técnico: Gerenciar Ordens de Servico (CRUD) e acessar o DashBoard
+     - Gestor: Gerenciar Ordens de Serviço(CRUD) , Gerenciar Equipamento
+     - Admin: Gerenciar Usuario, acessar o DashBoard
+
+     Fazer o login -> Antes de Qualquer Ação
+
+```mermaid
+graph TD
+    subgraph "SGM"
+        uc1([Fazer Login])
+        uc2([Gerenciar Ordens de Serviço - CRUD])
+        uc3([Gerenciar Equipamentos - CRUD])
+        uc4([Gerenciar Usuário])
+        uc5([Acessar o DashBoard])
+    end
+
+    Tecnico([Técnico de Manutenção])
+    Gestor([Gerente de Manutenção])
+    Admin([Administrador do Sistema])
+
+    Tecnico --> uc1 
+    Tecnico --> uc3
+    Tecnico --> uc5
+
+    Gestor --> uc1
+    Gestor --> uc2
+    Gestor --> uc3
+    Gestor --> uc5
+
+    Admin --> uc1
+    Admin --> uc4
+    Admin --> uc5
+
+    uc2 -.-> uc1
+    uc3 -.-> uc1
+    uc4 -.-> uc1
+    uc5 -.-> uc1
+
+```
+
+
+
+    
+    
