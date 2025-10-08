@@ -28,7 +28,6 @@ const OrdemServicoSchema: Schema<IOrdemServico> = new Schema({
 });
 
 // fromMap toMap
-
 const OrdemServico: Model<IOrdemServico> =
   mongoose.models.OrdemServico ||
   mongoose.model<IOrdemServico>("OrdemServico", OrdemServicoSchema);

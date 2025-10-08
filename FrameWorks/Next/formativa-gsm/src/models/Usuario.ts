@@ -12,7 +12,7 @@ export interface IUsuario extends Document{
     email: string;
     senha: string; //permite que a senha retorne nulo( nao retorna a senha para o client_side)
     funcao: string;
-    compareSenha(senhaUsuario:string):Promise<boolean>;
+    compareSenha(senhaUsuario:string):Promise<boolean>; // ele vai comparar a senha com a que ta criptografada
     //devolve para o usuário apenas a booleana de comparação da senha
 }
 
@@ -31,7 +31,8 @@ const UsuarioSchema: Schema<IUsuario> = new Schema({
 //criptografia
 //metodo para comparar a senha antes de enviar para o BD
 UsuarioSchema.pre<IUsuario>("save", async function (next) {
-    if(!this.isModified('senha') || this.senha) return next;
+    if(!this.isModified('senha') || this.senha) return next; 
+    // Se o campo senha não foi modificado, não preciso fazer nada — apenas siga em frente.
     try {
         const salt = await bcrypt.genSalt(10); //todos as senha o usam o mesmo padrão
         this.senha = await bcrypt.hash(this.senha,salt);
