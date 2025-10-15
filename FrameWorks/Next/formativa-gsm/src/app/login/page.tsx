@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 //componente client-side
@@ -36,8 +36,7 @@ export default function LoginPage() {
                 localStorage.setItem("funcao", data.usuario.funcao);
                 route.push("/dashboard");
             } else {
-                const erroData = data.error();
-                setErro(erroData.message || "Falha de Login");
+                setErro("Falha de Login");
             }
         } catch (error) {
             console.error("Erro de Login", error);
