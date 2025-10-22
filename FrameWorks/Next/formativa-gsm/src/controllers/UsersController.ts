@@ -1,4 +1,5 @@
-import Usuario, { IUsuario } from "@/models/Usuario";
+
+import Usuario, { IUsuario } from "@/models/User";
 import connectMongo from "@/services/mongodb"
 
 

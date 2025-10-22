@@ -198,4 +198,3 @@ kanban-system/
 └── database/
     └── models/
 ```
-

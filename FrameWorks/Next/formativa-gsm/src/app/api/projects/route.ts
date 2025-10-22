@@ -1,25 +1,24 @@
 // rrotas de requisição api que não usa ID (GET / POST)
 
-import { createEquipamento, getAllEquipamento } from "@/controllers/EquipamentoController";
 import { NextRequest, NextResponse } from "next/server";
+import { createProject, getAllProjects } from "@/controllers/ProjectsController";
 
 export async function GET() {
     try {
-        //requisição HTTP -> é front -> request -> backend
-        const equipamentos = await getAllEquipamento(); //busca todos os usuário no BD
-        return NextResponse.json({success:true, data: equipamentos});
+        const projects = await getAllProjects();
+        return NextResponse.json({ success: true, data: projects });
     } catch (error) {
-        return NextResponse.json({success:false, error:error});
+        return NextResponse.json({ success: false, error });
     }
 }
 
-export async function POST(req:NextRequest){ //pega o conteudo do HTML(visual)
+export async function POST(req: NextRequest) {
     try {
-        const data = await req.json(); //converte html => json
-        const novoEquipamento = await createEquipamento(data);
-        return NextResponse.json({success:true, data:novoEquipamento});
+        const data = await req.json();
+        const novo = await createProject(data);
+        return NextResponse.json({ success: true, data: novo });
     } catch (error) {
-        return NextResponse.json({success:false, error:error});
+        return NextResponse.json({ success: false, error });
     }
 }
 

@@ -1,6 +1,6 @@
 //Rotas que PRecisam do ID (PATCH ou PUT, DELETE, GET(one))
 
-import { deleteUsuario, getOneUsuario, updateUsuario } from "@/controllers/UsuarioController";
+import { deleteUsuario, getOneUsuario, updateUsuario } from "@/controllers/UsersController";
 import { NextRequest, NextResponse } from "next/server";
 
 //criar uma interface, PArametro ==id:string

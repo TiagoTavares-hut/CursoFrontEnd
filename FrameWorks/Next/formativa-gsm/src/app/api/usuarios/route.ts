@@ -1,6 +1,6 @@
 // rotas de requisicao de api que nao usa id (get / post)
 
-import { createUsuario, getAllUsuario } from "@/controllers/UsuarioController";
+import { createUsuario, getAllUsuario } from "@/controllers/UsersController";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {

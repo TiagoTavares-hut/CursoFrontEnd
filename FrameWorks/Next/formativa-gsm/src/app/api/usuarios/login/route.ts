@@ -1,6 +1,6 @@
 //criar o login do usuario (POST) -> envia o email e senha -> retorna o usuario
 
-import { autenticaUsuario } from "@/controllers/UsuarioController";
+import { autenticaUsuario } from "@/controllers/UsersController";
 import { error } from "console";
 import { NextRequest, NextResponse } from "next/server";
 

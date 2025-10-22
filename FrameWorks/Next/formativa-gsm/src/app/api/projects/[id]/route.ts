@@ -1,6 +1,6 @@
 // //Rotas que PRecisam do ID (PATCH ou PUT, DELETE, GET(one))
 
-import { deleteEquipamento, getOneEquipamento, updateEquipamento } from "@/controllers/EquipamentoController";
+import { deleteProject, getOneProject, updateProject } from "@/controllers/ProjectsController";
 import { NextRequest, NextResponse } from "next/server";
 
 //criar uma interface, PArametro ==id:string
@@ -13,13 +13,13 @@ export async function PATCH(req: NextRequest, {params}:{params:Parametro}){
     try {
         const {id} = params;
         const data = await req.json();
-        const equipamentoAtualizado = await updateEquipamento(id, data);
+        const projetoAtualizado = await updateProject(id, data);
         //quando o usuário não foi encontrado
-        if(!equipamentoAtualizado){
+        if(!projetoAtualizado){
             return NextResponse.json({success:false, error:"Not Found"});
         }
         //usuraio foi encontrado e atualizado
-        return NextResponse.json({success:true, data: equipamentoAtualizado});
+        return NextResponse.json({success:true, data: projetoAtualizado});
     } catch (error) {
         //quando não consegue conexão com o bd
         return NextResponse.json({success:false, error:error});
@@ -27,28 +27,24 @@ export async function PATCH(req: NextRequest, {params}:{params:Parametro}){
 }
 
 // GET(One)
-export async function GET({params}:{params:Parametro}) {
-    try{
-        const {id} = params;
-        const equipamento = await getOneEquipamento(id);
-        if(!equipamento){
-            return NextResponse.json({success:false, error:"Not Found"});
+export async function GET(req: NextRequest, { params }: { params: Parametro }) {
+    try {
+        const project = await getOneProject(params.id);
+        if (!project) {
+            return NextResponse.json({ success: false, error: "Projeto não encontrado" }, { status: 404 });
         }
-        //usuraio foi encontrado e atualizado
-        return NextResponse.json({success:true, data: equipamento});
+        return NextResponse.json({ success: true, data: project });
     } catch (error) {
-        //quando não consegue conexão com o bd
-        return NextResponse.json({success:false, error:error});
+        return NextResponse.json({ success: false, error });
     }
 }
 
 //DELETE
-export async function DELETE({params}:{params:Parametro}) {
+export async function DELETE(req: NextRequest, { params }: { params: Parametro }) {
     try {
-        const {id} = params;
-        await deleteEquipamento(id);
-        return NextResponse.json({success:true, data:{}});
+        await deleteProject(params.id);
+        return NextResponse.json({ success: true });
     } catch (error) {
-        return NextResponse.json({success:false, error:error});    
+        return NextResponse.json({ success: false, error });
     }
 }

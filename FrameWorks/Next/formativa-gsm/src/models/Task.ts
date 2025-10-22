@@ -1,35 +1,33 @@
-//classe para equipamentos
+//classe para Projects
 
 import mongoose, { Document, Model, Schema } from "mongoose";
 
 // atributos da classe
-export interface IOrdemServico extends Document {
+export interface ITask extends Document {
   _id: string;
   titulo: string;
-  descricao: string;
-  tipoManutencao: string;
-  status: string;
-  dataSolicitada: Date;
-  dataFinalizacao: Date;
-  tecnicoId: string;
-  EquipamentoId: string;
+  descricao?: string;
+  status: "A Fazer" | "Em Andamento" | "Concluído";
+  projetoId: string;
+  responsavelId?: string;
+  criadoEm: Date;
+  concluidoEm?: Date;
 }
 
 //Schema da Classe ( Construtor)
-const OrdemServicoSchema: Schema<IOrdemServico> = new Schema({
+const TaskSchema: Schema<ITask> = new Schema({
   titulo: { type: String, required: true },
-  descricao: { type: String, required: true },
-  tipoManutencao: { type: String, required: true },
-  status: { type: String, enum: ["aberta","andamento","fechada"], default: "aberta" },
-  dataSolicitada: { type: Date, default: Date.now },
-  dataFinalizacao: { type: Date },
-  tecnicoId: { type: String, required: true },
-  EquipamentoId: { type: String, required: true },
+  descricao: { type: String },
+  status: { type: String, enum: ["A Fazer", "Em Andamento", "Concluído"], default: "A Fazer" },
+  projetoId: { type: String, required: true },
+  responsavelId: { type: String },
+  criadoEm: { type: Date, default: Date.now },
+  concluidoEm: { type: Date },
 });
 
 // fromMap toMap
-const OrdemServico: Model<IOrdemServico> =
-  mongoose.models.OrdemServico ||
-  mongoose.model<IOrdemServico>("OrdemServico", OrdemServicoSchema);
+const Task: Model<ITask> =
+  mongoose.models.Task ||
+  mongoose.model<ITask>("Task", TaskSchema);
 
-export default OrdemServico;
+export default Task;

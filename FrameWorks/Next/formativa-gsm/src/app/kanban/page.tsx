@@ -1,57 +1,36 @@
 "use client";
-
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import DashboardAdmin from "./DashboardAdmin";
-import DashboardGestor from "./DashboardGestor";
-import DashboardTecnico from "./DashboardTecnico";
+import KanbanBoard from "@/components/KanbanBoard";
+import { ITask } from "@/models/Task";
 
-export default function DashboardPage() {
-    const router = useRouter();
-    const [userFuncao, setUserFuncao] = useState<string | null>(null);
+export default function KanbanPage() {
+    const [tasks, setTasks] = useState<ITask[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const funcao = localStorage.getItem("funcao");
-        if (!funcao) {
-            router.push("/login");
-        } else {
-            setUserFuncao(funcao);
-        }
-    }, [router]);
+        const fetchTasks = async () => {
+            try {
+                const res = await fetch('/api/tasks');
+                const data = await res.json();
+                if (data.success) {
+                    setTasks(data.data);
+                }
+            } catch (error) {
+                console.error('Erro ao carregar tarefas:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const handleLogout = async () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("funcao");
-        router.push("/login");
-    };
+        fetchTasks();
+    }, []);
 
-    const renderDashboard = () => {
-        if (userFuncao?.toLowerCase() === "admin") {
-            return <DashboardAdmin />;
-        } else if (userFuncao?.toLowerCase() === "gestor") {
-            return <DashboardGestor />;
-        } else if (userFuncao?.toLowerCase() === "tecnico") {
-            return <DashboardTecnico />;
-        } else {
-            return <p>Carregando dashboard...</p>;
-        }
-    };
+    if (loading) return <div>Carregando...</div>;
 
     return (
-        <div className="min-h-screen bg-gray-50 text-gray-900">
-            <header className="flex justify-between items-center px-6 py-4 bg-blue-600 text-white">
-                <h1 className="text-2xl font-semibold">
-                    Bem-vindo, {userFuncao?.toUpperCase() || "Usuário"}
-                </h1>
-                <button
-                    onClick={handleLogout}
-                    className="bg-red-500 px-4 py-2 rounded hover:bg-red-600 transition"
-                >
-                    Logout
-                </button>
-            </header>
-
-            <main className="p-6">{renderDashboard()}</main>
+        <div className="p-4">
+            <h1 className="text-2xl font-bold mb-4">Quadro Kanban</h1>
+            <KanbanBoard tasks={tasks} />
         </div>
     );
 }

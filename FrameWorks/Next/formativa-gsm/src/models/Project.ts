@@ -1,26 +1,17 @@
 import mongoose, { Document, Model, Schema } from "mongoose";
 
-export interface IEquipamento extends Document{
+export interface IProject extends Document {
     _id: string;
-    modelo: String;
-    marca: String;
-    numSerie: String;
-    status: String;
-    localizacao: String;
+    titulo: string;
+    descricao?: string;
+    criadoEm: Date;
 }
 
-//costrutor
-const EquipamentoSchema: Schema<IEquipamento> = new Schema({
-    modelo: {type: String, required:true},
-    marca: {type: String, required:true},
-    numSerie: {type: String, required: true, unique: true },
-    status: { type: String, enum: ["ativo", "inativo", "manutencao"], default: "ativo" },
-    localizacao: {type: String, required:true},
+const ProjectSchema: Schema<IProject> = new Schema({
+    titulo: { type: String, required: true },
+    descricao: { type: String },
+    criadoEm: { type: Date, default: Date.now },
 });
 
-//toMap <=> fromMap
-const Equipamento: Model<IEquipamento> = mongoose.models.Equipamento
-    || mongoose.model<IEquipamento>("Equipamento", EquipamentoSchema);
-
-//componente reutilizavel
-export default Equipamento;
+const Project: Model<IProject> = mongoose.models.Project || mongoose.model<IProject>("Project", ProjectSchema);
+export default Project;
