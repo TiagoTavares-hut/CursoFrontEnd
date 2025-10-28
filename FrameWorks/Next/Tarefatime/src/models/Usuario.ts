@@ -1,62 +1,61 @@
-import mongoose, { Schema, Document } from 'mongoose';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import bcrypt from "bcryptjs";
+import mongoose, { Document, Model } from "mongoose";
+import { Schema } from "mongoose";
 
-// Funções baseadas no Diagrama de Caso de Uso: Membro, Gerente, Administrador
-export type UserRole = 'Membro' | 'Gerente' | 'Administrador';
+  
+//class de modelagem de dados para Usuario
 
-export interface IUser extends Document {
+//atributos do Usuario
+export interface IUsuario extends Document {
+  _id: string;
   nome: string;
   email: string;
-  senha: string;
-  funcao: UserRole;
-  
-  // Métodos
-  comparePassword(candidatePassword: string): Promise<boolean>;
-  generateAuthToken(): string;
+  senha?: string;
+  funcao: string;
+  compareSenha(senhaUsuario:string):Promise<boolean>;
 }
 
-const UserSchema: Schema = new Schema({
-  nome: { type: String, required: true },
-  email: { type: String, required: true, unique: true, lowercase: true },
-  senha: { type: String, required: true },
-  funcao: { 
-    type: String, 
-    enum: ['Membro', 'Gerente', 'Administrador'], 
-    default: 'Membro' 
-  },
-}, { 
-    timestamps: true 
+//schema -> construtor 
+const UsuarioSchema:Schema<IUsuario> = new Schema({
+  nome: {type:String, required:true},
+  email: {type:String, required:true, unique:true},
+  senha: {type:String, required:true, select:false}, //select:false -> não retorna a senha nas consultas
+  funcao: {type: String, enum:[
+    "admin","gerente","membro"
+  ], required:true}
 });
 
-// Middleware PRE-SAVE: Criptografia da Senha
-UserSchema.pre<IUser>('save', async function (next) {
-  if (!this.isModified('senha')) {
-    return next();
-  }
-  const salt = await bcrypt.genSalt(10);
-  this.senha = await bcrypt.hash(this.senha, salt);
-  next();
-});
+//middleware para hashear a senha
+// serve para hashear a senha antes de salvar no BD
+UsuarioSchema.pre<IUsuario>('save', async function (next) { 
+    // se a senha não foi modificada ou se esta nula
+    if(!this.isModified('senha') || !this.senha) return next();
+    try {
+        //gema para criptografar a senha
+        const salt = await bcrypt.genSalt(10);
+        // faz a criptografia da senha a partir de senha
+        this.senha = await bcrypt.hash(this.senha, salt);
+        // salva a senha criptografada
+        next();
+    } catch (error:any) {
+        next(error);
+    }
+    
+})
 
-// Método: Comparar Senha
-UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
-  return bcrypt.compare(candidatePassword, this.senha);
-};
+// método para compara senhas
+//quando faz o login ( compara a senha digita 
+//e criptografada com a senha criptografa do banco)
+UsuarioSchema.methods.compareSenha = 
+function (senhaUsuario:string): Promise<boolean>{
+    return bcrypt.compare(senhaUsuario,this.senha);
+}
 
-// Método: Gerar JWT
-UserSchema.methods.generateAuthToken = function (): string {
-  const secret = process.env.JWT_SECRET;
-  if (!secret) {
-    throw new Error("JWT_SECRET não está definido nas variáveis de ambiente.");
-  }
 
-  return jwt.sign(
-    { _id: this._id, funcao: this.funcao, nome: this.nome },
-    secret,
-    { expiresIn: '1d' }
-  );
-};
+//toMap // FromMap
 
-const User = (mongoose.models.User || mongoose.model<IUser>('User', UserSchema));
-export default User as mongoose.Model<IUser>;
+const Usuario: Model<IUsuario> = mongoose.models.User 
+|| mongoose.model<IUsuario>("Usuario", UsuarioSchema);
+
+
+export default Usuario;

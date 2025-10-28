@@ -13,6 +13,7 @@ O projeto consiste no desenvolvimento de um Sistema de Gerenciamento de Tarefas 
   - Melhorar a organização e produtividade da equipe
 
 - ### Público-Alvo:
+  - Administradores de Projetos
   - Gerente de Projeto
   - Membro da Equipe
 
@@ -175,26 +176,3 @@ graph TD
 
 ---
 
-## Estrutura do Projeto
-
-```
-kanban-system/
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── KanbanBoard/
-│   │   │   ├── TaskCard/
-│   │   │   └── ProjectManager/
-│   │   ├── pages/
-│   │   │   ├── Login/
-│   │   │   ├── Dashboard/
-│   │   │   └── Projects/
-│   │   └── utils/
-├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   └── middleware/
-└── database/
-    └── models/
-```
